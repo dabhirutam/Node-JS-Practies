@@ -8,12 +8,12 @@ const Auth = (route) => async (req, res, next) => {
         const decode = jwt.verify(token, 'web_token');
         if(decode){
             req.user = await authModel.findById(decode._id);
-            route === 'logIn' ? res.redirect(`/${decode.role}/dashboard`) : next();
+            route === 'signIn' ? res.redirect(`/${decode.role}/dashboard`) : next();
         }else{
-            route === 'logIn' ? next() : res.redirect('/auth/logIn');;
+            route === 'signIn' ? next() : res.redirect('/auth/signIn');;
         }
     }else{
-        route === 'logIn' ? next() : res.redirect('/auth/logIn');;
+        route === 'signIn' ? next() : res.redirect('/auth/signIn');;
     }
 }
 

@@ -4,13 +4,13 @@ const Auth = require('../../middleware/auth');
 
 const authRoute = express.Router();
 
-//Register
-authRoute.get('/register', authController.ViewRegister);
-authRoute.post('/register', authController.Register);
+//SignUp
+authRoute.get('/signUp', authController.ViewSignUp);
+authRoute.post('/signUp', authController.SignUp);
 
-//LogIn
-authRoute.get('/logIn', Auth('logIn'), authController.ViewLogIn);
-authRoute.post('/logIn', authController.LogIn);
+//SignIn
+authRoute.get('/signIn', Auth('signIn'), authController.ViewSignIn);
+authRoute.post('/signIn', authController.SignIn);
 
 //Sign Out
 authRoute.get('/signOut', authController.SignOut);

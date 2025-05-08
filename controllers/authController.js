@@ -2,39 +2,47 @@ const authModel = require("../models/authModel");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-//Register
-const ViewRegister = (req, res) => {
-    res.render('auth/register', { msg: req.flash('Register')[0] });
+//SignUp
+const ViewSignUp = (req, res) => {
+    res.render('auth/signUp');
 }
 
-const Register = async (req, res) => {
+const SignUp = async (req, res) => {
     const { name, email, password, role } = req.body;
 
+    const auth = await authModel.findOne({email});
+
+    if(auth) return console.log("User is allready exist, try another email.");
+    
+
     try {
-        const userData = new authModel({
+        const userData = await new authModel({
             name,
             email,
             password: await bcrypt.hash(password, 10),
             role
         });
 
-        userData.save();
+        await userData.save();
 
         console.log("User is crated successfully.");
 
-        res.redirect('logIn');
+        res.redirect('signIn');
     } catch (error) {
         console.log("Server Error", error);
     }
 }
 
-//LogIn
-const ViewLogIn = (req, res) => {
-    res.render('auth/logIn');
+//SignIn
+const ViewSignIn = (req, res) => {
+    res.render('auth/signIn');
 }
 
-const LogIn = async (req, res) => {
+const SignIn = async (req, res) => {
     const { email, password } = req.body;
+
+    console.log("ADMIN", req.body);
+    
 
     const user = await authModel.findOne({ email });
 
@@ -47,7 +55,7 @@ const LogIn = async (req, res) => {
     if (verify) {
         token = jwt.sign({ _id: user._id, role: user.role }, 'web_token');
         res.cookie('token', token, { maxAge: 1000 * 60 * 60, expire: true, httpOnly: true });
-        console.log(`${user.role} logIn successfuly.`);
+        console.log(`${user.role} SignIn successfuly.`);
 
         user.role === 'admin' ? res.redirect('/admin/dashboard') : res.redirect('/user/dashboard');
     } else {
@@ -57,7 +65,7 @@ const LogIn = async (req, res) => {
 
 const SignOut = (req, res) => {
     res.clearCookie('token');
-    res.redirect('logIn');
+    res.redirect('signIn');
 }
 
-module.exports = { ViewRegister, Register, ViewLogIn, LogIn, SignOut }
+module.exports = { ViewSignUp, SignUp, ViewSignIn, SignIn, SignOut }
