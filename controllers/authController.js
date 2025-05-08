@@ -47,7 +47,7 @@ const LogIn = async (req, res) => {
     if (verify) {
         token = jwt.sign({ _id: user._id, role: user.role }, 'web_token');
         res.cookie('token', token, { maxAge: 1000 * 60 * 60, expire: true, httpOnly: true });
-        console.log("User logIn successfuly.");
+        console.log(`${user.role} logIn successfuly.`);
 
         user.role === 'admin' ? res.redirect('/admin/dashboard') : res.redirect('/user/dashboard');
     } else {
@@ -55,4 +55,9 @@ const LogIn = async (req, res) => {
     }
 }
 
-module.exports = { ViewRegister, Register, ViewLogIn, LogIn }
+const SignOut = (req, res) => {
+    res.clearCookie('token');
+    res.redirect('logIn');
+}
+
+module.exports = { ViewRegister, Register, ViewLogIn, LogIn, SignOut }
