@@ -39,10 +39,7 @@ const ViewSignIn = (req, res) => {
 }
 
 const SignIn = async (req, res) => {
-    const { email, password } = req.body;
-
-    console.log("ADMIN", req.body);
-    
+    const { email, password } = req.body;    
 
     const user = await authModel.findOne({ email });
 
