@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const db = mongoose.connect('mongodb+srv://DabhiRutam:aecc057314f828c1d5b5f4@booksdatabase.r8v9p.mongodb.net/Practies').then(() =>{
+const db = mongoose.connect('mongodb://0.0.0.0:27017/mydatabase').then(() =>{
     console.log("Database connect");
 }).catch(err => {
     console.log("Error", err);

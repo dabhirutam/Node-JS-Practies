@@ -10,10 +10,10 @@ const ViewSignUp = (req, res) => {
 const SignUp = async (req, res) => {
     const { name, email, password, role } = req.body;
 
-    const auth = await authModel.findOne({email});
+    const auth = await authModel.findOne({ email });
 
-    if(auth) return console.log("User is allready exist, try another email.");
-    
+    if (auth) return console.log("User is allready exist, try another email.");
+
 
     try {
         const userData = await new authModel({
@@ -39,7 +39,7 @@ const ViewSignIn = (req, res) => {
 }
 
 const SignIn = async (req, res) => {
-    const { email, password } = req.body;    
+    const { email, password } = req.body;
 
     const user = await authModel.findOne({ email });
 
@@ -65,4 +65,10 @@ const SignOut = (req, res) => {
     res.redirect('signIn');
 }
 
-module.exports = { ViewSignUp, SignUp, ViewSignIn, SignIn, SignOut }
+module.exports = {
+    ViewSignUp,
+    SignUp,
+    ViewSignIn,
+    SignIn,
+    SignOut
+}

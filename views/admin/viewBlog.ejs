@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- HTML Head -->
+<%- include('../components/head') %>
+
+    <body class="g-sidenav-show   bg-gray-100">
+        <div class="min-height-300 bg-dark position-absolute w-100"></div>
+
+        <!-- Sidebar -->
+        <%-include('.. /components/sidebar') %>
+
+            <main class="main-content position-relative border-radius-lg ">
+
+                <!-- Navbar -->
+                <%- include('../components/navbar') %>
+                    <!-- End Navbar -->
+
+                    <div class="container-fluid py-4">
+                        <div class="pagetitle">
+                            <h1>Profile</h1>
+                            <nav>
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item">Admin</li>
+                                    <li class="breadcrumb-item active">Blog</li>
+                                </ol>
+                            </nav>
+                        </div><!-- End Page Title -->
+                    </div>
+
+
+                    <section class="section profile">
+                        <div class="container-fluid py-4">
+                            <div class="row justify-content-center py-5">
+                                <h2 class="text-center mb-5">Latest Blog Posts</h2>
+                                <div class="row">
+                                    <% adminBlog.forEach( blog=> { %>
+                                        <div class="col-5">
+                                            <div class="card p-2">
+                                                <img src="<%= blog.blogImg %>" style="width: 100%;aspect-ratio: 3/2;"
+                                                    class="card-img-top p-2 object-fit-fill border" alt="...">
+                                                <div class="card-body mt-3">
+                                                    <div class="d-flex align-items-center m-0">
+                                                        <img class="rounded-circle border-1 border-black object-fit-cover"
+                                                            style="width: 55px;aspect-ratio: 1/1;"
+                                                            src="<%= blog.admin.avatar %>" alt="">
+                                                        <div class="ms-2">
+                                                            <h6 class="m-0 fw-bold">
+                                                                <%= blog.admin.userName %>
+                                                            </h6>
+                                                            <p class="m-0" style="font-size: 14.5px;">
+                                                                <%= new Date(blog.createdAt).toLocaleString('en-US', {
+                                                                    weekday: 'long' , year: 'numeric' , month: 'long' ,
+                                                                    day: 'numeric' , hour: 'numeric' , minute: 'numeric'
+                                                                    , second: 'numeric' , hour12: true, }) %>
+                                                            </p>
+                                                        </div>
+                                                        <span class="ms-auto text-primary fw-medium time-ago"
+                                                            data-time="<%= blog.createdAt %>">
+                                                            <%= new Date(blog.createdAt).toLocaleString('en-US') %>
+                                                        </span>
+                                                    </div>
+                                                    <h5 class="card-title">
+                                                        <%= blog.title %>
+                                                    </h5>
+                                                    <%- blog.blog %>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <% }) %>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+            </main>
+
+            <!-- Settingbar -->
+            <%- include('../components/Settingbar') %>
+
+                <!-- Script -->
+                <%- include('../components/script') %>
+    </body>
+
+</html>
