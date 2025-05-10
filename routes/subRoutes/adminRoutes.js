@@ -18,5 +18,9 @@ adminRoute.get('/addBlog', blogController.ViewAddBlog);
 adminRoute.post('/addBlog', blogImgs.single('img'), blogController.AddBlog);
 
 adminRoute.get('/viewBlog', blogController.ViewBlog);
+adminRoute.get('/viewMyBlog', blogController.ViewMyBlog);
+
+adminRoute.get('/updateBlog/:id', blogController.ViewUpdateBlog);
+adminRoute.post('/updateBlog/:id', blogImgs.single('img'), blogController.UpdateBlog);
 
 module.exports = adminRoute;
