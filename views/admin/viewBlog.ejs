@@ -14,7 +14,7 @@
 
                 <!-- Navbar -->
                 <%- include('../components/navbar') %>
-                <!-- End Navbar -->
+                    <!-- End Navbar -->
 
                     <div class="container-fluid py-4">
                         <div class="pagetitle">
@@ -32,46 +32,81 @@
 
                     <section class="section profile py-5">
                         <div class="container-fluid">
-                                <h2 class="text-center my-5">Latest Blog</h2>
-                                <div class="row justify-content-center">
-                                    <% blogs.forEach( blog=> { %>
-                                        <div class="col-5">
-                                            <div class="card p-2">
-                                                <img src="../<%= blog.img %>" style="width: 100%;aspect-ratio: 3/2;"
-                                                    class="card-img-top p-2 object-fit-fill border" alt="...">
-                                                <div class="card-body mt-3">
-                                                    <div class="d-flex align-items-center m-0">
-                                                        <img class="rounded-circle border-1 border-black object-fit-cover"
-                                                            style="width: 55px;aspect-ratio: 1/1;"
-                                                            src="../<%= blog.author.avatar ? blog.author.avatar : '../uploads/profileImgs/profile_dummy_img.webp' %>" alt="">
-                                                        <div class="ms-2">
-                                                            <h6 class="m-0 fw-bold">
-                                                                <%= blog.author.name %>
-                                                            </h6>
-                                                            <p class="m-0" style="font-size: 14.5px;">
-                                                                <%= new Date(blog.createdAt).toLocaleString('en-US', {
-                                                                    weekday: 'long' , year: 'numeric' , month: 'long' ,
-                                                                    day: 'numeric' , hour: 'numeric' , minute: 'numeric'
-                                                                    , second: 'numeric' , hour12: true, }) %>
-                                                            </p>
-                                                        </div>
-                                                        <span class="ms-auto text-primary fw-medium time-ago"
-                                                            data-time="<%= blog.createdAt %>">
-                                                            <%= new Date(blog.createdAt).toLocaleString('en-US') %>
-                                                        </span>
-                                                    </div>
-                                                    <h5 class="card-title mt-4">
-                                                        <%= blog.title %>
-                                                    </h5>
-                                                    <p>
-                                                        <%- blog.description %>
-                                                    </p>
+                            <h2 class="text-center my-5">Latest Blog</h2>
+                            <div class="row justify-content-center row-gap-4">
+                                <% blogs.forEach( blog=> { %>
+                                    <div class="col-5">
+                                        <div class="card p-2">
+                                            <img src="../<%= blog.img %>" style="width: 100%;aspect-ratio: 3/2;"
+                                                class="card-img-top p-2 object-fit-fill border" alt="...">
+                                            <form action="/admin/addComment" method="post" class="my-3">
+                                                <input type="text" name="blog" value="<%= blog._id %>" hidden>
+                                                <div class="input-group">
+                                                    <input type="text" name="comment" class="form-control" placeholder="Comment" aria-describedby="button-addon2">
+                                                    <button class="btn btn-primary m-0" type="submit" id="button-addon2">Button</button>
                                                 </div>
+                                            </form>
+                                            <div class="p-4 d-flex flex-column row-gap-4 overflow-y-scroll" style="max-height: 300px;">
+                                                <h4 class="mb-3">Comments</h4>
+                                                <% blog.comments.forEach( comment => { %>
+                                                    <div class="shadow-sm rounded-3 px-2">
+                                                        <div class="d-flex align-items-center m-0">
+                                                            <img class="rounded-circle border-1 border-black object-fit-cover"
+                                                                style="width: 40px;aspect-ratio: 1/1;"
+                                                                src="../<%= comment.author.avatar ? comment.author.avatar : '../uploads/profileImgs/profile_dummy_img.webp' %>"
+                                                                alt="">
+                                                            <div class="ms-2">
+                                                                <h6 class="m-0 fw-bold" style="font-size: 14px;">
+                                                                    <%= comment.author.name %>
+                                                                </h6>
+                                                                <p class="m-0" style="font-size: 12px;">
+                                                                    <%= new Date(comment.createdAt).toLocaleString('en-US', {
+                                                                        weekday: 'long' , year: 'numeric' , month: 'long' ,
+                                                                        day: 'numeric' , hour: 'numeric' , minute: 'numeric' ,
+                                                                        second: 'numeric' , hour12: true, }) %>
+                                                                </p>
+                                                            </div>
+                                                            <span class="ms-auto text-primary fw-medium time-ago" style="font-size: 12px;" data-time="<%= blog.createdAt %>">
+                                                                <%= new Date(blog.createdAt).toLocaleString('en-US') %>
+                                                            </span>
+                                                        </div>
+                                                        <p style="font-size: 14px;" class="mt-2 ms-5"><%= comment.comment %></p>
+                                                    </div>
+                                                <% }) %>
                                             </div>
-
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center m-0">
+                                                    <img class="rounded-circle border-1 border-black object-fit-cover"
+                                                        style="width: 55px;aspect-ratio: 1/1;"
+                                                        src="../<%= blog.author.avatar ? blog.author.avatar : '../uploads/profileImgs/profile_dummy_img.webp' %>"
+                                                        alt="">
+                                                    <div class="ms-2">
+                                                        <h6 class="m-0 fw-bold">
+                                                            <%= blog.author.name %>
+                                                        </h6>
+                                                        <p class="m-0" style="font-size: 14.5px;">
+                                                            <%= new Date(blog.createdAt).toLocaleString('en-US', {
+                                                                weekday: 'long' , year: 'numeric' , month: 'long' ,
+                                                                day: 'numeric' , hour: 'numeric' , minute: 'numeric' ,
+                                                                second: 'numeric' , hour12: true, }) %>
+                                                        </p>
+                                                    </div>
+                                                    <span class="ms-auto text-primary fw-medium time-ago"
+                                                        data-time="<%= blog.createdAt %>">
+                                                        <%= new Date(blog.createdAt).toLocaleString('en-US') %>
+                                                    </span>
+                                                </div>
+                                                <h5 class="card-title mt-4">
+                                                    <%= blog.title %>
+                                                </h5>
+                                                <p>
+                                                    <%- blog.description %>
+                                                </p>
+                                            </div>
                                         </div>
-                                        <% }) %>
-                                </div>
+                                    </div>
+                                    <% }) %>
+                            </div>
                         </div>
                     </section>
             </main>
@@ -79,8 +114,8 @@
             <!-- Settingbar -->
             <%- include('../components/Settingbar') %>
 
-            <!-- Script -->
-            <%- include('../components/script') %>
+                <!-- Script -->
+                <%- include('../components/script') %>
     </body>
 
 </html>
